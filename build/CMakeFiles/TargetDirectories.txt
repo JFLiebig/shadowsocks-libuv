@@ -1,2 +1,4 @@
-/home/lizhou/tinysocks/build/CMakeFiles/ssclient.dir
-/home/lizhou/tinysocks/build/CMakeFiles/ssserver.dir
+/app/build/CMakeFiles/ssclient.dir
+/app/build/CMakeFiles/ssserver.dir
+/app/build/CMakeFiles/edit_cache.dir
+/app/build/CMakeFiles/rebuild_cache.dir
