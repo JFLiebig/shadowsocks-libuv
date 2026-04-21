@@ -18,17 +18,11 @@ endif()
 # Dependencies
 find_package(OpenSSL REQUIRED)
 
-# Try to find libuv
 find_path(LIBUV_INCLUDE_DIR NAMES uv.h)
 find_library(LIBUV_LIBRARY NAMES uv)
 
 if(NOT LIBUV_INCLUDE_DIR OR NOT LIBUV_LIBRARY)
-    if(WIN32)
-        message(FATAL_ERROR "libuv not found. Please install it via vcpkg or set LIBUV_INCLUDE_DIR and LIBUV_LIBRARY.")
-    else()
-        message(WARNING "libuv not found by find_path/find_library. Falling back to default 'uv' name.")
-        set(LIBUV_LIBRARY uv)
-    endif()
+    message(FATAL_ERROR "libuv not found")
 endif()
 
 # Source files
@@ -58,11 +52,7 @@ add_executable(ssserver
 
 # Target configurations
 foreach(target ssclient ssserver)
-    if(LIBUV_INCLUDE_DIR)
-        target_include_directories(${target} PRIVATE ${LIBUV_INCLUDE_DIR})
-    endif()
-    target_include_directories(${target} PRIVATE src)
-
+    target_include_directories(${target} PRIVATE src ${LIBUV_INCLUDE_DIR})
     target_link_libraries(${target} PRIVATE ${LIBUV_LIBRARY} OpenSSL::SSL OpenSSL::Crypto)
 
     if(WIN32 OR CMAKE_SYSTEM_NAME MATCHES "MINGW")
